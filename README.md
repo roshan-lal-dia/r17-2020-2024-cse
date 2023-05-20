@@ -8,3 +8,8 @@ The 2020-2024 CSE Journey at SMCE
 
 
 ### Subjetc List
+
+
+
+### Semester 6
+ - Internet Programming
