@@ -10,6 +10,8 @@ The 2020-2024 CSE Journey at SMCE
 ### Subjetc List
 
 
+### Semester 7
+ - IT8761 - Security Laboratory 
 
 ### Semester 6
  - Internet Programming 
