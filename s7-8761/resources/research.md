@@ -6,4 +6,6 @@
 2. Substitution Techniques
 
 #### Modular Arithmetic
- https://www.geeksforgeeks.org/modular-arithmetic/
+ 1. https://www.geeksforgeeks.org/modular-arithmetic/
+ 2. https://artofproblemsolving.com/wiki/index.php/Modular_arithmetic/Introduction
+ 3. https://artofproblemsolving.com/wiki/index.php/Integer
