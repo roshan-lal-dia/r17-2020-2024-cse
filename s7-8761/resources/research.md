@@ -11,5 +11,6 @@
  3. https://artofproblemsolving.com/wiki/index.php/Integer
 
  #### Substitution
- 1. https://www.geeksforgeeks.org/substitution-cipher/
+ 1. https://www.geeksforgeeks.org/substitution-cipher/ --used to understand substitutuion cipher, moving 
+    to caesar cipher
  2. https://www.geeksforgeeks.org/caesar-cipher-in-cryptography/

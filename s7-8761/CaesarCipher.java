@@ -1,5 +1,5 @@
-//ex.1.a) Ceaser Cipher
-public class CeaserCipher{
+//ex.1.a) Caesar Cipher
+public class CaesarCipher{
 
 
 
