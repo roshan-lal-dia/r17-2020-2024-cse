@@ -1,8 +1,5 @@
 ### Algorithm:
 Key Generation:
-
-### Algorithm:
-Key Generation:
 1. Generate a random invertible key matrix K (3x3 for a 3x3 Hill cipher).
 
 Encryption:

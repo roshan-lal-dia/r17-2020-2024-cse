@@ -1,18 +1,5 @@
 ### Algorithm:
-Key Generation:
 
-### Algorithm:
-Key Generation:
-1. Generate a random invertible key matrix K (3x3 for a 3x3 Hill cipher).
-
-Encryption:
-1. Represent the plaintext as a column vector P.
-2. Calculate the ciphertext vector C using the formula C = K * P.
-
-Decryption:
-1. Calculate the inverse of the key matrix K⁻¹.
-2. Represent the ciphertext as a column vector C.
-3. Calculate the plaintext vector P using the formula P = K⁻¹ * C.
 
 ### Pseudocode:
 ```
