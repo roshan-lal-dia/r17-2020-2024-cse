@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h1, h2, h3, p {
+            font-family: "Geneva";
+        }
+
+        #generate-pq-button {
+            background-color: white;
+            color: black;
+            border: 2px solid #ff4081;
+            width: 50%;
+        }
+
+        #generate-pq-button:hover {
+            background-color: #ff4081;
+            color: white;
+        }
+
+        .card {
+            margin: auto;
+            width: 50%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            border-radius: 5px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #3f51b5;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 8px 2px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+        }
+
+        /* for disabled button */
+        .disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        input[type="number"] {
+            margin: 8px;
+            padding: 8px;
+            width: 80%;
+        }
+
+        input[type="number"]:focus {
+            border: 1px solid #555;
+        }
+    </style>
+    <script>
+        function isPrime(num) {
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) {
+                    return false;
+                }
+            }
+            return num > 1;
+        }
+
+        function generateNthPrime(n) {
+            let count = 0;
+            let candidate = 1;
+            while (count < n) {
+                candidate++;
+                if (isPrime(candidate)) {
+                    count++;
+                }
+            }
+            return candidate;
+        }
+
+        function encrypt() {
+            const message = document.getElementById("message").value;
+            const p = parseInt(document.getElementById("p").value);
+            const q = parseInt(document.getElementById("q").value);
+
+            const n = p * q;
+            const phi = (p - 1) * (q - 1);
+
+            let e = 2;
+            while (e < phi) {
+                if (gcd(e, phi) === 1) {
+                    break;
+                }
+                e++;
+            }
+
+            const publicKey = { e, n };
+            const encryptedMessage = rsaEncrypt(message, publicKey);
+
+            document.getElementById("cipher-text").value = encryptedMessage;
+        }
+
+        function decrypt() {
+            const encryptedMessage = document.getElementById("cipher-text").value;
+            const d = parseInt(document.getElementById("d").value);
+            const n = parseInt(document.getElementById("n").value);
+
+            const privateKey = { d, n };
+            const decryptedMessage = rsaDecrypt(encryptedMessage, privateKey);
+
+            document.getElementById("plain-text").value = decryptedMessage;
+        }
+
+        function generatePandQ() {
+            const p = generateNthPrime(Math.floor(Math.random() * 100) + 1);
+            let q = generateNthPrime(Math.floor(Math.random() * 100) + 1);
+
+            while (p === q) {
+                q = generateNthPrime(Math.floor(Math.random() * 100) + 1);
+            }
+
+            document.getElementById("p").value = p;
+            document.getElementById("q").value = q;
+
+            updateComputedValues();
+        }
+
+        function updateComputedValues() {
+            const p = parseInt(document.getElementById("p").value);
+            const q = parseInt(document.getElementById("q").value);
+
+            const n = p * q;
+            const phi = (p - 1) * (q - 1);
+
+            let e = 2;
+            while (e < phi) {
+                if (gcd(e, phi) === 1) {
+                    break;
+                }
+                e++;
+            }
+
+            let d = modInverse(e, phi);
+
+            document.getElementById("n").value = n;
+            document.getElementById("phi").value = phi;
+            document.getElementById("e").value = e;
+            document.getElementById("d").value = d;
+        }
+
+        function rsaEncrypt(message, publicKey) {
+            const charCodes = message.split('').map(char => char.charCodeAt(0));
+            const encryptedCodes = charCodes.map(code => modPow(code, publicKey.e, publicKey.n));
+            return encryptedCodes.join(',');
+        }
+
+        function rsaDecrypt(encryptedMessage, privateKey) {
+            const encryptedCodes = encryptedMessage.split(',').map(Number);
+            const decryptedCodes = encryptedCodes.map(code => modPow(code, privateKey.d, privateKey.n));
+            return String.fromCharCode(...decryptedCodes);
+        }
+
+        function gcd(a, b) {
+            while (b !== 0) {
+                [a, b] = [b, a % b];
+            }
+            return a;
+        }
+
+        function modInverse(a, m) {
+            for (let i = 1; i < m; i++) {
+                if ((a * i) % m === 1) {
+                    return i;
+                }
+            }
+            return 1;
+        }
+
+        function modPow(base, exponent, modulus) {
+            let result = 1;
+            base = base % modulus;
+            while (exponent > 0) {
+                if (exponent % 2 === 1) {
+                    result = (result * base) % modulus;
+                }
+                exponent = Math.floor(exponent / 2);
+                base = (base * base) % modulus;
+            }
+            return result;
+        }
+    </script>
+    <title>RSA Algorithm</title>
+</head>
+<body>
+    <div class="card">
+        <h1>RSA Algorithm</h1>
+        <div class="container">
+            <input type="text" placeholder="Message" id="message"/>
+            <button onclick="encrypt()">Encrypt</button>
+            <button onclick="decrypt()">Decrypt</button>
+        </div>
+
+        <div class="p-and-q-values">
+            <label for="p">p</label>
+            <input type="number" id="p" />
+
+            <label for="q">q</label>
+            <input type="number" id="q" />
+
+            <button id="generate-pq-button" onclick="generatePandQ()">Generate P & Q</button>
+        </div>
+
+        <hr>
+
+        <h2>Computed Values</h2>
+        <div class="computed-values">
+            <label for="n">n = p*q</label>
+            <input type="number" id="n" disabled/>
+
+            <label for="phi">phi = (p-1)*(q-1)</label>
+            <input type="number" id="phi" disabled/>
+
+            <label for="e">e</label>
+            <input type="number" id="e" disabled/>
+
+            <label for="d">d</label>
+            <input type="number" id="d" disabled/>
+        </div>
+
+        <hr>
+
+        <div class="result">
+            <h3>Plain Text</h3>
+            <input type="text" id="plain-text" disabled/>
+
+            <h3>Cipher Text</h3>
+            <input type="text" id="cipher-text" disabled/>
+        </div>
+    </div>
+</body>
+</html>
