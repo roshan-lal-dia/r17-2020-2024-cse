@@ -41,3 +41,19 @@ Procedure:
 Output:
 
 The decrypted text decryptedText.
+
+### Pseudocode:
+```
+function encrypt(text, shift):
+    encrypted_text = ""
+    for character in text:
+        if character.isalpha():
+            shifted_char = (ord(character) + shift - ord('A')) % 26 + ord('A') if character.isupper() else (ord(character) + shift - ord('a')) % 26 + ord('a')
+            encrypted_text += chr(shifted_char)
+        else:
+            encrypted_text += character
+    return encrypted_text
+    
+function decrypt(encrypted_text, shift):
+    return encrypt(encrypted_text, -shift)
+```
