@@ -51,3 +51,8 @@ function calculateSHA1MessageDigest(inputText):
 calculateSHA1MessageDigest("YourInputTextHere")
 
 ```
+
+## Sample Output:
+
+SHA-1 Message Digest: 2ef7bde608ce5404e97d5f042f95f89f1c232871
+
