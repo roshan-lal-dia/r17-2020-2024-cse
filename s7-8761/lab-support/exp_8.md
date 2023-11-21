@@ -39,3 +39,16 @@ function verifyDigitalSignature(message, signature, publicKey):
 
 
 ```
+
+## Sample Input:
+
+Original Message: "Hello, DSA!"
+
+## Sample Output:
+
+Original Message: Hello, DSA!
+
+Digital Signature: 304502202166171a3e53ea091ed730e0582a02f7778490a14a7e643b1a1bfda24c4a6063022100d15ad2a7685ac7446d0b38ccdb12f2a26cb6319e3e8a207f075d0dbd3e2ee2b1
+
+Signature Verification: true
+
